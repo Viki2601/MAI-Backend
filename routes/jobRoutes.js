@@ -5,6 +5,20 @@ const path = require('path');
 const Job = require('../models/Job');
 const Application = require('../models/Applications');
 
+// Temporary CORS headers for each route (Vercel-safe)
+router.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://mai-corporation.vercel.app'); // frontend URL
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 
 // Posting Jobs
 router.post('/jobs', async (req, res) => {
