@@ -1,29 +1,29 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const helmet = require('helmet');
 require('dotenv').config();
-
+const connectDB = require('./config/db');
 const jobRoutes = require('./routes/jobRoutes');
-
+const { errorHandler } = require('./middlewares/errorMiddleware');
 const app = express();
 
+// Connect DB
+connectDB();
+
 // Middleware
-app.use(cors({
-  origin: "https://mai-corporation.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
-app.use(express.json());
+app.use(helmet());
+app.use(cors());
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+
+// Static folder for resumes
+app.use('/uploads', express.static('uploads'));
 
 // Routes
 app.use("/api", jobRoutes);
-app.use('/uploads', express.static('uploads'));
 
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+// Error Handling Middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
