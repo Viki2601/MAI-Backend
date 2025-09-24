@@ -5,6 +5,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const jobRoutes = require('./routes/jobRoutes');
 const { errorHandler } = require('./middlewares/errorMiddleware');
+
 const app = express();
 
 // Connect DB
@@ -12,7 +13,12 @@ connectDB();
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+  optionsSuccessStatus: 200,
+}));
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
