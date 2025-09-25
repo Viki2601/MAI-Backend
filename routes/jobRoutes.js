@@ -8,9 +8,9 @@ const router = express.Router();
 // Job Routes
 router.post('/createJob', createJob);
 router.get('/getJobs', getJobs);
-router.get('/:id', getJobById);
-router.put('/:id', updateJob);
-router.delete('/:id', deleteJob);
+router.get('/jobs/slug/:slug', getJobById);
+router.put('/updateJob/slug:slug', updateJob);
+router.delete('/deleteJobs/:slug', deleteJob);
 
 // Applications
 router.post('/apply', upload.single('resume'), submitApplication);

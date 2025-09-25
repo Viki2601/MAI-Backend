@@ -24,7 +24,7 @@ const getJobs = async (req, res, next) => {
 // Get Job By ID
 const getJobById = async (req, res, next) => {
     try {
-        const job = await Job.findById(req.params.id);
+        const job = await Job.findOne({ slug: req.params.slug });
         if (!job) return res.status(404).json({ success: false, message: "Job not found" });
         res.json({ success: true, job });
     } catch (error) {
@@ -45,7 +45,7 @@ const updateJob = async (req, res, next) => {
 // Delete Job
 const deleteJob = async (req, res, next) => {
     try {
-        await Job.findByIdAndDelete(req.params.id);
+        await Job.findOneAndDelete({ slug: req.params.slug });
         res.json({ success: true, message: "Job Deleted Successfully" });
     } catch (error) {
         next(error);
