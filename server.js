@@ -4,6 +4,7 @@ const helmet = require('helmet');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const jobRoutes = require('./routes/jobRoutes');
+const applicationRoutes = require('./routes/applicationsRoute');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Routes
 app.use("/api", jobRoutes);
+app.use('/api', applicationRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);
