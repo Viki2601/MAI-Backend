@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/createJob', createJob);
 router.get('/getJobs', getJobs);
 router.get('/jobs/slug/:slug', getJobById);
-router.put('/updateJob/slug:slug', updateJob);
+router.put('/updateJob/:slug', updateJob);
 router.delete('/deleteJobs/:slug', deleteJob);
 
 // Applications

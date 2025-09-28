@@ -35,12 +35,14 @@ const getJobById = async (req, res, next) => {
 // Update Job
 const updateJob = async (req, res, next) => {
     try {
-        const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedJob = await Job.findOneAndUpdate({ slug: req.params.slug }, req.body, { new: true });
+        if (!updatedJob) { return res.status(404).json({ success: false, message: "Job not found" }); }
         res.json({ success: true, updatedJob });
     } catch (error) {
         next(error);
     }
 };
+
 
 // Delete Job
 const deleteJob = async (req, res, next) => {
