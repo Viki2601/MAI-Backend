@@ -5,6 +5,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationsRoute');
+const testimonialRoutes = require('./routes/testimonialsRoute');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/uploads', express.static('uploads'));
 // Routes
 app.use("/api", jobRoutes);
 app.use('/api', applicationRoutes);
+app.use('/api', testimonialRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);
